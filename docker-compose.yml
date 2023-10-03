@@ -2,8 +2,11 @@ version: "3"
 
 services:
   namenode:
-    image: fcjbispo/fbnet-hadoop-namenode:2.0.0-hadoop3.2.1-java8
-    container_name: namenode
+    image: fcjbispo/fbnet-hadoop-namenode:2.0.0-hadoop3.3.6-java8
+    container_name: fbnet-hadoop-namenode
+    hostname: namenode
+    networks:
+      - fbnet-hadoop
     restart: always
     ports:
       - 9870:9870
@@ -11,45 +14,85 @@ services:
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
     environment:
-      - CLUSTER_NAME=test
+      - CLUSTER_NAME=fbnet-hadoop
     env_file:
       - ./hadoop.env
 
-  datanode:
-    image: fcjbispo/fbnet-hadoop-datanode:2.0.0-hadoop3.2.1-java8
-    container_name: datanode
+  datanode1:
+    image: fcjbispo/fbnet-hadoop-datanode:2.0.0-hadoop3.3.6-java8
+    container_name: fbnet-hadoop-datanode1
+    hostname: datanode1
+    networks:
+      - fbnet-hadoop
     restart: always
     volumes:
-      - hadoop_datanode:/hadoop/dfs/data
+      - hadoop_datanode1:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./hadoop.env
+
+  datanode2:
+    image: fcjbispo/fbnet-hadoop-datanode:2.0.0-hadoop3.3.6-java8
+    container_name: fbnet-hadoop-datanode2
+    hostname: datanode2
+    networks:
+      - fbnet-hadoop
+    restart: always
+    volumes:
+      - hadoop_datanode2:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./hadoop.env
+
+  datanode3:
+    image: fcjbispo/fbnet-hadoop-datanode:2.0.0-hadoop3.3.6-java8
+    container_name: fbnet-hadoop-datanode3
+    hostname: datanode3
+    networks:
+      - fbnet-hadoop
+    restart: always
+    volumes:
+      - hadoop_datanode3:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
       - ./hadoop.env
   
   resourcemanager:
-    image: fcjbispo/fbnet-hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
-    container_name: resourcemanager
+    image: fcjbispo/fbnet-hadoop-resourcemanager:2.0.0-hadoop3.3.6-java8
+    container_name: fbnet-hadoop-resourcemanager
+    hostname: resourcemanager
+    networks:
+      - fbnet-hadoop
     restart: always
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
     env_file:
       - ./hadoop.env
 
   nodemanager1:
-    image: fcjbispo/fbnet-hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
-    container_name: nodemanager
+    image: fcjbispo/fbnet-hadoop-nodemanager:2.0.0-hadoop3.3.6-java8
+    container_name: fbnet-hadoop-nodemanager
+    hostname: nodemanager
+    networks:
+      - fbnet-hadoop
     restart: always
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     env_file:
       - ./hadoop.env
   
   historyserver:
-    image: fcjbispo/fbnet-hadoop-historyserver:2.0.0-hadoop3.2.1-java8
-    container_name: historyserver
+    image: fcjbispo/fbnet-hadoop-historyserver:2.0.0-hadoop3.3.6-java8
+    container_name: fbnet-hadoop-historyserver
+    hostname: historyserver
+    networks:
+      - fbnet-hadoop
     restart: always
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
@@ -57,5 +100,42 @@ services:
   
 volumes:
   hadoop_namenode:
-  hadoop_datanode:
+    name: vol-hadoop_namenode
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: F:\FBNet\hadoop-cluster-namenode
+  hadoop_datanode1:
+    name: vol-hadoop_datanode1
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: F:\FBNet\hadoop-cluster-datanode1
+  hadoop_datanode2:
+    name: vol-hadoop_datanode2
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: F:\FBNet\hadoop-cluster-datanode2
+  hadoop_datanode3:
+    name: vol-hadoop_datanode3
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: F:\FBNet\hadoop-cluster-datanode3
   hadoop_historyserver:
+    name: vol-hadoop_historyserver
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: F:\FBNet\hadoop-cluster-historyserver
+
+networks:
+  fbnet-hadoop:
+    driver: bridge
+    external: True

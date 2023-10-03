@@ -1,6 +1,7 @@
 FROM nginx
 
-MAINTAINER "Ivan Ermilov <mailto:ivan.s.ermilov@gmail.com>"
+LABEL AUTHOR="Ivan Ermilov <ivan.s.ermilov@gmail.com>"
+LABEL MAINTAINER="Francisco C J Bispo <fcjbispo@franciscobispo.net>"
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 COPY materialize.min.css /data/bde-css/materialize.min.css

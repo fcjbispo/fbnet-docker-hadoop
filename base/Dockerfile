@@ -1,7 +1,8 @@
-FROM debian:9
+FROM ubuntu:22.04
 
-MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
-MAINTAINER Giannis Mouchakis <gmouchakis@iit.demokritos.gr>
+LABEL AUTHOR="Ivan Ermilov <ivan.s.ermilov@gmail.com>"
+LABEL AUTHOR="Giannis Mouchakis <gmouchakis@iit.demokritos.gr>"
+LABEL MAINTAINER="Francisco C J Bispo <fcjbispo@franciscobispo.net>"
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       openjdk-8-jdk \

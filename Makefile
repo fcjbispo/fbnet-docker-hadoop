@@ -8,13 +8,13 @@ build:
 	docker build -t fcjbispo/fbnet-hadoop-resourcemanager:$(current_branch) ./resourcemanager
 	docker build -t fcjbispo/fbnet-hadoop-nodemanager:$(current_branch) ./nodemanager
 	docker build -t fcjbispo/fbnet-hadoop-historyserver:$(current_branch) ./historyserver
-	docker build -t fcjbispo/fbnet-hadoop-submit:$(current_branch) ./submit
+	docker build -t fcjbispo/fbnet-hadoop-wordcount:$(current_branch) ./wordcount
 
 wordcount:
 	docker build -t hadoop-wordcount ./submit
 	docker run --network ${DOCKER_NETWORK} --env-file ${ENV_FILE} fcjbispo/fbnet-hadoop-base:$(current_branch) hdfs dfs -mkdir -p /input/
 	docker run --network ${DOCKER_NETWORK} --env-file ${ENV_FILE} fcjbispo/fbnet-hadoop-base:$(current_branch) hdfs dfs -copyFromLocal -f /opt/hadoop-3.2.1/README.txt /input/
-	docker run --network ${DOCKER_NETWORK} --env-file ${ENV_FILE} hadoop-wordcount
+	docker run --network ${DOCKER_NETWORK} --env-file ${ENV_FILE} fcjbispo/fbnet-hadoop-wordcount:$(current_branch)
 	docker run --network ${DOCKER_NETWORK} --env-file ${ENV_FILE} fcjbispo/fbnet-hadoop-base:$(current_branch) hdfs dfs -cat /output/*
 	docker run --network ${DOCKER_NETWORK} --env-file ${ENV_FILE} fcjbispo/fbnet-hadoop-base:$(current_branch) hdfs dfs -rm -r /output
 	docker run --network ${DOCKER_NETWORK} --env-file ${ENV_FILE} fcjbispo/fbnet-hadoop-base:$(current_branch) hdfs dfs -rm -r /input

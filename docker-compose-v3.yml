@@ -2,7 +2,7 @@ version: '3'
 
 services:
   namenode:
-    image: fcjbispo/fbnet-hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    image: fcjbispo/fbnet-hadoop-namenode:2.0.0-hadoop3.3.6-java8
     networks:
       - hbase
     volumes:
@@ -24,7 +24,7 @@ services:
         traefik.port: 50070
 
   datanode:
-    image: fcjbispo/fbnet-hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    image: fcjbispo/fbnet-hadoop-datanode:2.0.0-hadoop3.3.6-java8
     networks:
       - hbase
     volumes:
@@ -42,7 +42,7 @@ services:
         traefik.port: 50075
 
   resourcemanager:
-    image: fcjbispo/fbnet-hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    image: fcjbispo/fbnet-hadoop-resourcemanager:2.0.0-hadoop3.3.6-java8
     networks:
       - hbase
     environment:
@@ -64,7 +64,7 @@ services:
       disable: true
 
   nodemanager:
-    image: fcjbispo/fbnet-hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    image: fcjbispo/fbnet-hadoop-nodemanager:2.0.0-hadoop3.3.6-java8
     networks:
       - hbase
     environment:
@@ -80,7 +80,7 @@ services:
         traefik.port: 8042
 
   historyserver:
-    image: fcjbispo/fbnet-hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+    image: fcjbispo/fbnet-hadoop-historyserver:2.0.0-hadoop3.3.6-java8
     networks:
       - hbase
     volumes:

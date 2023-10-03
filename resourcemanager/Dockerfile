@@ -1,6 +1,7 @@
-FROM fcjbispo/fbnet-hadoop-base:2.0.0-hadoop3.2.1-java8
+FROM fcjbispo/fbnet-hadoop-base:2.0.0-hadoop3.3.6-java8
 
-MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
+LABEL AUTHOR="Ivan Ermilov <ivan.s.ermilov@gmail.com>"
+LABEL MAINTAINER="Francisco C J Bispo <fcjbispo@franciscobispo.net>"
 
 HEALTHCHECK CMD curl -f http://localhost:8088/ || exit 1
 
