@@ -5,14 +5,22 @@ LABEL AUTHOR="Giannis Mouchakis <gmouchakis@iit.demokritos.gr>"
 LABEL MAINTAINER="Francisco C J Bispo <fcjbispo@franciscobispo.net>"
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      openjdk-8-jdk \
-      net-tools \
-      curl \
-      netcat \
-      gnupg \
-      libsnappy-dev \
+    openjdk-8-jdk \
+    net-tools \
+    curl \
+    netcat \
+    gnupg \
+    libsnappy-dev \
+    openssh-server \
+    python3 \
+    python3-pip \
+    rsync \
+    sudo \
+    arp-scan \
+    iputils-ping \
+    nano \
     && rm -rf /var/lib/apt/lists/*
-      
+
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
 RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS

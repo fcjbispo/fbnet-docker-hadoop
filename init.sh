@@ -1,1 +1,0 @@
-docker network create -d bridge fbnet-hadoop
