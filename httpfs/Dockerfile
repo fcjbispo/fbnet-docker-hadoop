@@ -2,7 +2,7 @@ FROM fcjbispo/fbnet-hadoop-base:2.0.0-hadoop3.3.6-java8
 
 LABEL AUTHOR="Francisco C J Bispo <fcjbispo@franciscobispo.net>"
 
-HEALTHCHECK CMD curl -f http://localhost:14000/ || exit 
+# HEALTHCHECK CMD curl -f http://localhost:14000/ || exit 
 
 ARG X_HDFS_USER=fbnet
 ARG X_HDFS_GROUP=supergroup
