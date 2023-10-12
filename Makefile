@@ -40,11 +40,10 @@ run-wordcount:
 	docker run --network ${DOCKER_NETWORK} --env-file ${ENV_FILE} fcjbispo/fbnet-hadoop-base:$(current_branch) hdfs dfs -rm -r /input
 
 up:
-	docker network create -d bridge ${DOCKER_NETWORK}
+	if [ -n $(docker network ls | grep ${DOCKER_NETWORK}) ]; then docker network create -d bridge ${DOCKER_NETWORK}; fi
 	docker compose -p ${DOCKER_PROJECT} -f ./docker-compose.yml up --detach
 
 stop:
-	docker network create -d bridge ${DOCKER_NETWORK}
 	docker compose -p ${DOCKER_PROJECT} -f ./docker-compose.yml stop
 
 restart:
@@ -52,4 +51,5 @@ restart:
 
 down:
 	docker compose -p ${DOCKER_PROJECT} -f ./docker-compose.yml down
-	docker network rm ${DOCKER_NETWORK}
+	docker network rm --force ${DOCKER_NETWORK}
+	for v in vol-hadoop_datanode1 vol-hadoop_datanode2 vol-hadoop_datanode3 vol-hadoop_historyserver vol-hadoop_httpfs vol-hadoop_namenode; do docker volume rm --force $${v}; done;
