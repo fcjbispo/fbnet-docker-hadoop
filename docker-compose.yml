@@ -124,42 +124,42 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /mnt/f/FBNet/hadoop-cluster-namenode
+      device: D:\FBNet\hadoop-cluster-namenode
   hadoop_datanode1:
     name: vol-hadoop_datanode1
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /mnt/f/FBNet/hadoop-cluster-datanode1
+      device: D:\FBNet\hadoop-cluster-datanode1
   hadoop_datanode2:
     name: vol-hadoop_datanode2
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /mnt/f/FBNet/hadoop-cluster-datanode2
+      device: D:\FBNet\hadoop-cluster-datanode2
   hadoop_datanode3:
     name: vol-hadoop_datanode3
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /mnt/f/FBNet/hadoop-cluster-datanode3
+      device: D:\FBNet\hadoop-cluster-datanode3
   hadoop_historyserver:
     name: vol-hadoop_historyserver
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /mnt/f/FBNet/hadoop-cluster-historyserver
+      device: D:\FBNet\hadoop-cluster-historyserver
   hadoop_httpfs:
     name: vol-hadoop_httpfs
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /mnt/f/Series
+      device: D:\Series
 
 networks:
   fbnet-hadoop:
